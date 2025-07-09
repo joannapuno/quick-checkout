@@ -4,18 +4,16 @@
     :class="{
       'is-focused': isFocused,
       'has-value': modelValue,
-      'no-border': noBorder
+      'no-border': noBorder,
     }"
   >
     <label>{{ label }}</label>
     <input
       :value="modelValue"
-      @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-      @focus="handleFocus"
-      @blur="handleBlur"
+      @input="onInput"
+      @focus="onFocus"
+      @blur="onBlur"
       :name="name"
-      :autocomplete="autocomplete"
-      :inputmode="inputmode"
       :type="type"
       placeholder=" "
     />
@@ -25,18 +23,16 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
   label: string
   modelValue: string
   name?: string
-  autocomplete?: string
-  inputmode?: string
-  type?: string
+  type?: HTMLInputElement['type']
   noBorder?: boolean
 }>(), {
   name: '',
   autocomplete: '',
-  inputmode: '',
+  inputmode: undefined,
   type: 'text',
   noBorder: false,
 })
@@ -47,18 +43,19 @@ const emit = defineEmits<{
   (e: 'blur', value: string): void
 }>()
 
-const isFocused = ref<boolean>(false)
+const isFocused = ref(false)
 
-const handleFocus = (value: string) => {
+const onInput = (e: Event) => {
+  emit('update:modelValue', (e.target as HTMLInputElement).value)
+}
+const onFocus = (e: FocusEvent) => {
   isFocused.value = true
-  emit('focus', value)
+  emit('focus', (e.target as HTMLInputElement).value)
 }
-
-const handleBlur = (value: string) => {
+const onBlur = (e: FocusEvent) => {
   isFocused.value = false
-  emit('blur', value)
+  emit('blur', (e.target as HTMLInputElement).value)
 }
-
 </script>
 
 <style scoped lang="scss">
@@ -67,7 +64,7 @@ const handleBlur = (value: string) => {
 
   input {
     width: 100%;
-    padding: 1.5rem 1rem 0.5rem;
+    padding: 1.8rem 1rem 0.5rem;
     font-size: 1.2rem;
     border: 1px solid #ccc;
     border-radius: 0.5rem;
@@ -80,7 +77,6 @@ const handleBlur = (value: string) => {
     }
   }
 
-  // Conditionally remove border if inside grouped layout
   &.no-border input {
     border: none;
     border-radius: 0;

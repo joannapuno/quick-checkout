@@ -1,1 +1,1 @@
-# quick-checkout
+# Quick Checkout

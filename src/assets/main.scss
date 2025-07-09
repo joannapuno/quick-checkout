@@ -1,0 +1,81 @@
+@use './base.scss';
+
+#app {
+  height: 100vh;
+}
+
+#wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: linear-gradient(
+    343deg,
+    rgb(197 156 58) 0%,
+    rgba(213, 120, 189, 1) 46%,
+    rgba(230, 155, 164, 1) 70%,
+    rgba(255, 204, 128, 1) 100%
+  );
+  height: 100%;
+  overflow-y: auto;
+}
+
+.label-sm {
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25.75rem;
+  gap: 16px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 40px;
+  box-shadow: 0 0 80px #c56ea0;
+}
+
+/* Animations */
+.slide-up {
+  animation: slide-up 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+.slide-down {
+  animation: slide-down 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+.infinite-rotate {
+  animation: infinite-rotate 1.5s ease-in-out infinite both;
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(10rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-down {
+  0% {
+    transform: translateY(-10rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes infinite-rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

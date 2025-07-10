@@ -9,12 +9,16 @@
   >
     <label>{{ label }}</label>
     <input
+      ref="inputRef"
       :value="modelValue"
+      v-bind="$attrs"
       @input="onInput"
       @focus="onFocus"
       @blur="onBlur"
       :name="name"
       :type="type"
+      :maxlength="maxlength"
+      :minlength="minlength"
       placeholder=" "
     />
   </div>
@@ -29,12 +33,16 @@ withDefaults(defineProps<{
   name?: string
   type?: HTMLInputElement['type']
   noBorder?: boolean
+  maxlength?: number
+  minlength?: number
 }>(), {
   name: '',
   autocomplete: '',
   inputmode: undefined,
   type: 'text',
   noBorder: false,
+  maxlength: 100,
+  minlength: 1
 })
 
 const emit = defineEmits<{
@@ -43,7 +51,11 @@ const emit = defineEmits<{
   (e: 'blur', value: string): void
 }>()
 
+const inputRef = ref<HTMLInputElement | null>(null)
 const isFocused = ref(false)
+defineExpose({
+  focus: () => inputRef.value?.focus(),
+})
 
 const onInput = (e: Event) => {
   emit('update:modelValue', (e.target as HTMLInputElement).value)
@@ -71,6 +83,9 @@ const onBlur = (e: FocusEvent) => {
     background: white;
     transition: border-color 0.2s;
     outline: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &::placeholder {
       color: transparent;

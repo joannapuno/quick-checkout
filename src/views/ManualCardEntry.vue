@@ -79,8 +79,9 @@ const handleIsProcessing = () => {
 
 .display {
   &__card {
-    height: 10rem;
+    min-height: 10rem;
     width: 31.25rem;
+    max-width: 100%;
     display: flex;
     align-items: end;
     background-color: hsla(278, 98%, 56%, 43%);
@@ -98,7 +99,7 @@ const handleIsProcessing = () => {
   &__card-info {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 0.5rem;
   }
 
   &__card-exp {
@@ -109,7 +110,7 @@ const handleIsProcessing = () => {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding: 5rem 0;
+  padding: 1rem 0;
 
   &__content {
     display: flex;

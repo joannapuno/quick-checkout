@@ -7,8 +7,9 @@
 #wrapper {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
+  padding: 0 1rem;
   background: linear-gradient(
     343deg,
     rgb(197 156 58) 0%,
@@ -34,11 +35,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 25.75rem;
-  gap: 16px;
+  max-width: 25.75rem;
+  gap: 1rem;
   background-color: #fff;
   border-radius: 10px;
-  padding: 40px;
+  padding: 2.5rem;
   box-shadow: 0 0 80px #c56ea0;
 }
 
@@ -55,7 +56,7 @@
 
 @keyframes slide-up {
   0% {
-    transform: translateY(10rem);
+    transform: translateY(100%);
   }
   100% {
     transform: translateY(0);
@@ -64,7 +65,7 @@
 
 @keyframes slide-down {
   0% {
-    transform: translateY(-10rem);
+    transform: translateY(-100%);
   }
   100% {
     transform: translateY(0);

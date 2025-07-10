@@ -1,91 +1,85 @@
 <script setup lang="ts">
+import { ref, computed } from 'vue'
 import checkoutImage from '@/assets/checkout-image.jpg'
-import TextField from '@/components/TextField.vue';
-import CardFields from '@/components/CardFields.vue';
-import AppButton from '@/components/AppButton.vue';
-import { computed, ref } from 'vue';
-import { router } from '@/routes';
+import CardContainer from '@/components/CardContainer.vue'
+import TextField from '@/components/TextField.vue'
+import CardFields from '@/components/CardFields.vue'
+import AppButton from '@/components/AppButton.vue'
+import { router } from '@/routes'
 
-const cardHolderName = ref('')
-const cardNumber = ref('')
-const expiry = ref('')
-const cvc = ref('')
+const cardHolderName = ref<string>('')
+const cardNumber = ref<string>('')
+const expiry = ref<string>('')
+const cvc = ref<string>('')
 
-const cardHolderName_display = computed({
-  get: () => {
-    return cardHolderName.value || "Cardholder name"
-  },
-  set: (newVal: string) => {
-    cardHolderName.value = newVal
-  }
+const cardHolderName_display = computed<string>({
+  get: () => cardHolderName.value || 'Cardholder name',
+  set: (newVal) => cardHolderName.value = newVal
 })
-const cardNumber_display = computed({
-  get: () => {
-    return cardNumber.value || "0000 0000 0000 0000"
-  },
-  set: (newVal: string) => {
-    cardNumber.value = newVal
-  }
+
+const cardNumber_display = computed<string>({
+  get: () => cardNumber.value || '0000 0000 0000 0000',
+  set: (newVal) => cardNumber.value = newVal
 })
-const expiry_display = computed({
-  get: () => {
-    return expiry.value || "MM / YY"
-  },
-  set: (newVal: string) => {
-    expiry.value = newVal
-  }
+
+const expiry_display = computed<string>({
+  get: () => expiry.value || 'MM/YY',
+  set: (newVal) => expiry.value = newVal
 })
 
 const handleIsProcessing = () => {
   router.push('processing')
 }
 </script>
+
 <template>
   <section class="display__card slide-down">
-      <div class="w-100">
-        <p class="display__card-name">{{ cardHolderName_display }}</p>
-
-        <div class="display__card-info">
-          <p class="display__card-number">{{ cardNumber_display }}</p>
-          <p class="display__card-exp">{{ expiry_display }}</p>
-        </div>
+    <div class="w-100">
+      <p class="display__card-name">{{ cardHolderName_display }}</p>
+      <div class="display__card-info">
+        <p class="display__card-number">{{ cardNumber_display }}</p>
+        <p class="display__card-exp">{{ expiry_display }}</p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="form slide-up">
-      <div class="form__container card-container">
-        <div class="form__header-image">
-          <img :src="checkoutImage" alt="store image">
-        </div>
-
-        <div class="form__total-info">
-          <p class="label-sm">You are paying</p>
-          <h3 class="total">$12.32</h3>
-        </div>
-
-        <div class="form__content">
-          <TextField label="Name on card" v-model="cardHolderName" />
-          <CardFields
-            v-model:cardNumber="cardNumber"
-            v-model:expiry="expiry"
-            v-model:cvc="cvc" />
-        </div>
+  <section class="form slide-up">
+    <CardContainer class="form__container">
+      <div class="form__header-image">
+        <img :src="checkoutImage" alt="store image" />
       </div>
 
-      <AppButton label="Pay Now" @click="handleIsProcessing" />
-    </section>
+      <div class="form__total-info">
+        <p class="label-sm">You are paying</p>
+        <h3 class="total">$12.32</h3>
+      </div>
+
+      <div class="form__content">
+        <TextField label="Name on card" v-model="cardHolderName" />
+        <CardFields
+          v-model:cardNumber="cardNumber"
+          v-model:expiry="expiry"
+          v-model:cvc="cvc"
+        />
+      </div>
+
+      <template #cta>
+        <AppButton label="Pay Now" @click="handleIsProcessing" />
+      </template>
+    </CardContainer>
+  </section>
 </template>
-<style scoped lang="scss">
 
+<style scoped lang="scss">
 .display {
   &__card {
-    min-height: 10rem;
+    min-height: 9rem;
     width: 31.25rem;
     max-width: 100%;
     display: flex;
     align-items: end;
     background-color: hsla(278, 98%, 56%, 43%);
-    box-shadow: 0 0 80px#C56EA0;
+    box-shadow: 0 0 80px #C56EA0;
     padding: 24px;
     border-radius: 0 0 10px 10px;
     color: #FFD8F3;
@@ -106,11 +100,12 @@ const handleIsProcessing = () => {
     text-align: right;
   }
 }
+
 .form {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding: 1rem 0;
+  padding: 2rem 0;
 
   &__content {
     display: flex;
@@ -136,6 +131,5 @@ const handleIsProcessing = () => {
       font-size: 3rem;
     }
   }
-
 }
 </style>

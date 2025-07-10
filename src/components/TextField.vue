@@ -1,29 +1,3 @@
-<template>
-  <div
-    class="text-field"
-    :class="{
-      'is-focused': isFocused,
-      'has-value': modelValue,
-      'no-border': noBorder,
-    }"
-  >
-    <label>{{ label }}</label>
-    <input
-      ref="inputRef"
-      :value="modelValue"
-      v-bind="$attrs"
-      @input="onInput"
-      @focus="onFocus"
-      @blur="onBlur"
-      :name="name"
-      :type="type"
-      :maxlength="maxlength"
-      :minlength="minlength"
-      placeholder=" "
-    />
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -52,7 +26,7 @@ const emit = defineEmits<{
 }>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
-const isFocused = ref(false)
+const isFocused = ref<boolean>(false)
 defineExpose({
   focus: () => inputRef.value?.focus(),
 })
@@ -69,6 +43,32 @@ const onBlur = (e: FocusEvent) => {
   emit('blur', (e.target as HTMLInputElement).value)
 }
 </script>
+
+<template>
+  <div
+    class="text-field"
+    :class="{
+      'is-focused': isFocused,
+      'has-value': modelValue,
+      'no-border': noBorder,
+    }"
+  >
+    <label>{{ label }}</label>
+    <input
+      ref="inputRef"
+      :value="modelValue"
+      v-bind="$attrs"
+      @input="onInput"
+      @focus="onFocus"
+      @blur="onBlur"
+      :name="name"
+      :type="type"
+      :maxlength="maxlength"
+      :minlength="minlength"
+      placeholder=" "
+    />
+  </div>
+</template>
 
 <style scoped lang="scss">
 .text-field {

@@ -19,7 +19,7 @@ const emit = defineEmits<{
   (e: 'update:cvc', value: string): void
 }>()
 
-const isFocused = ref(false)
+const isFocused = ref<boolean>(false)
 const cardRef = ref<TextFieldInstance | null>(null)
 const expiryRef = ref<TextFieldInstance | null>(null)
 const cvcRef = ref<TextFieldInstance | null>(null)
@@ -47,7 +47,6 @@ const handleExpiryInput = (val: string) => {
 
 <template>
   <div :class="['card-input-group', { 'is-focused': isFocused }]">
-    <!-- Card number -->
     <TextField
       ref="cardRef"
       :modelValue="scopedCardNumber"
@@ -59,7 +58,6 @@ const handleExpiryInput = (val: string) => {
       no-border
     />
 
-    <!-- Expiry + CVC -->
     <div class="card-input-row">
       <TextField
         ref="expiryRef"
@@ -110,6 +108,4 @@ const handleExpiryInput = (val: string) => {
     }
   }
 }
-
-
 </style>

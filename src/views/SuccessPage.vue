@@ -1,23 +1,17 @@
 <script setup lang="ts">
 import AppButton from '@/components/AppButton.vue';
 import AnimatedCheckmark from '@/components/AnimatedCheckmark.vue';
+import CardContainer from '@/components/CardContainer.vue';
 import { router } from '@/routes';
 </script>
+
 <template>
-  <section class="in-progress">
-    <div class="card-container">
-      <AnimatedCheckmark />
-      <p class="label-sm">Success!</p>
-    </div>
+  <CardContainer animated>
+    <AnimatedCheckmark />
+    <p class="label-sm">Success!</p>
 
-    <AppButton label="Make a new Payment" @click="router.push('/')" />
-  </section>
+    <template #cta>
+      <AppButton label="New Payment" @click="router.push('/')" />
+    </template>
+  </CardContainer>
 </template>
-
-<style scoped lang="scss">
-.in-progress {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-</style>

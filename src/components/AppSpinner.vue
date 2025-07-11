@@ -17,7 +17,7 @@ withDefaults(defineProps<{
 .spinner {
   svg {
     font-size: 2rem;
-    color: #d578bd;
+    color: var(--accent-low);
   }
 
   &.infinite-rotate {

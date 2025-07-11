@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   label: string
   modelValue: string
   name?: string
@@ -9,14 +9,14 @@ withDefaults(defineProps<{
   noBorder?: boolean
   maxlength?: number
   minlength?: number
+  invalidMessage?: string
 }>(), {
   name: '',
-  autocomplete: '',
-  inputmode: undefined,
   type: 'text',
   noBorder: false,
   maxlength: 100,
-  minlength: 1
+  minlength: 1,
+  invalidMessage: ''
 })
 
 const emit = defineEmits<{
@@ -27,6 +27,7 @@ const emit = defineEmits<{
 
 const inputRef = ref<HTMLInputElement | null>(null)
 const isFocused = ref<boolean>(false)
+
 defineExpose({
   focus: () => inputRef.value?.focus(),
 })
@@ -45,28 +46,35 @@ const onBlur = (e: FocusEvent) => {
 </script>
 
 <template>
-  <div
-    class="text-field"
-    :class="{
-      'is-focused': isFocused,
-      'has-value': modelValue,
-      'no-border': noBorder,
-    }"
-  >
-    <label>{{ label }}</label>
-    <input
-      ref="inputRef"
-      :value="modelValue"
-      v-bind="$attrs"
-      @input="onInput"
-      @focus="onFocus"
-      @blur="onBlur"
-      :name="name"
-      :type="type"
-      :maxlength="maxlength"
-      :minlength="minlength"
-      placeholder=" "
-    />
+  <div class="form-field">
+    <div
+      class="text-field"
+      :class="{
+        'is-focused': isFocused,
+        'has-error': invalidMessage !== '',
+        'has-value': modelValue,
+        'no-border': noBorder,
+      }"
+    >
+      <label>{{ label }}</label>
+      <input
+        ref="inputRef"
+        :value="modelValue"
+        v-bind="$attrs"
+        @input="onInput"
+        @focus="onFocus"
+        @blur="onBlur"
+        :name="name"
+        :type="type"
+        :maxlength="maxlength"
+        :minlength="minlength"
+        placeholder=" "
+      />
+    </div>
+    <div v-if="invalidMessage" class="validation-msg error-label">
+      <span class="fa-solid fa-triangle-exclamation" />
+      <span>{{ invalidMessage }}</span>
+    </div>
   </div>
 </template>
 
@@ -74,13 +82,20 @@ const onBlur = (e: FocusEvent) => {
 .text-field {
   position: relative;
 
+  &.is-focused input {
+    border-color: var(--accent-high);
+  }
+  &.has-error input {
+    border-color: var(--error);
+  }
+
   input {
     width: 100%;
     padding: 1.8rem 1rem 0.5rem;
     font-size: 1.2rem;
-    border: 1px solid #ccc;
+    border: 1px solid var(--outline-low);
     border-radius: 0.5rem;
-    background: white;
+    background: var(--on-primary);
     transition: border-color 0.2s;
     outline: none;
     white-space: nowrap;
@@ -104,13 +119,9 @@ const onBlur = (e: FocusEvent) => {
     top: 50%;
     transform: translateY(-50%);
     font-size: 1.2rem;
-    color: #999;
+    color: var(--label-low);
     pointer-events: none;
     transition: all 0.2s ease;
-  }
-
-  &.is-focused input {
-    border-color: #5633d6;
   }
 
   &.is-focused label,
@@ -118,7 +129,7 @@ const onBlur = (e: FocusEvent) => {
     top: 0.4rem;
     transform: none;
     font-size: 0.9rem;
-    color: #5633d6;
+    color: var(--accent-high);
   }
 }
 </style>

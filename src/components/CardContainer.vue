@@ -19,11 +19,11 @@
     align-items: center;
     gap: 1rem;
     width: 100%;
-    background-color: #fff;
+    background-color: var(--on-primary);
     border-radius: 10px;
     padding: 3rem 2rem;
     margin-bottom: 1rem;
-    box-shadow: 0 0 80px #c56ea0;
+    box-shadow: 0 0 80px var(--shadow-color);
 
     @media screen and (min-width: 445px){
       width: 25.75rem;

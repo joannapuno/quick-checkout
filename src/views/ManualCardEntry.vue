@@ -11,6 +11,7 @@ const cardHolderName = ref<string>('')
 const cardNumber = ref<string>('')
 const expiry = ref<string>('')
 const cvc = ref<string>('')
+const cardNameError = ref<string>('')
 
 const cardHolderName_display = computed<string>({
   get: () => cardHolderName.value || 'Cardholder name',
@@ -25,6 +26,15 @@ const cardNumber_display = computed<string>({
 const expiry_display = computed<string>({
   get: () => expiry.value || 'MM/YY',
   set: (newVal) => expiry.value = newVal
+})
+
+const formIsValid = computed<boolean>(() => {
+  return (
+    cardHolderName.value !== '' &&
+    cardNumber.value !== '' &&
+    expiry.value !== '' &&
+    cvc.value !== ''
+  )
 })
 
 const handleIsProcessing = () => {
@@ -55,7 +65,13 @@ const handleIsProcessing = () => {
       </div>
 
       <div class="form__content">
-        <TextField label="Name on card" v-model="cardHolderName" />
+        <TextField
+          label="Name on card"
+          v-model="cardHolderName"
+          :invalid-message="cardNameError"
+          @blur="() => !cardHolderName ? cardNameError = 'Name is not valid' : cardNameError = ''"
+        
+        />
         <CardFields
           v-model:cardNumber="cardNumber"
           v-model:expiry="expiry"
@@ -64,7 +80,11 @@ const handleIsProcessing = () => {
       </div>
 
       <template #cta>
-        <AppButton label="Pay Now" @click="handleIsProcessing" />
+        <AppButton
+          label="Pay Now"
+          @click="handleIsProcessing"
+          :disabled="!formIsValid"
+        />
       </template>
     </CardContainer>
   </section>
@@ -79,10 +99,10 @@ const handleIsProcessing = () => {
     display: flex;
     align-items: end;
     background-color: hsla(278, 98%, 56%, 43%);
-    box-shadow: 0 0 80px #C56EA0;
+    box-shadow: 0 0 80px var(--shadow-color);
     padding: 24px;
     border-radius: 0 0 10px 10px;
-    color: #FFD8F3;
+    color: var(--on-primary);
   }
 
   &__card-name {

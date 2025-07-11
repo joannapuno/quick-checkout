@@ -13,10 +13,10 @@ withDefaults(defineProps<{
 
 <style scoped lang="scss">
 .app-btn {
-  background-color: #C13787;
+  background-color: var(--primary-container);
   padding: 16px;
-  color: #FFFF;
-  box-shadow: 0 0 28px #C56EA0;
+  color: var(--on-primary);
+  box-shadow: 0 0 28px var(--shadow-color);
   border: none;
   width: 100%;
   border-radius: 5px;

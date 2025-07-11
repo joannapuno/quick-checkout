@@ -15,10 +15,10 @@
     stroke-width: 4;
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke: #d578bd;
+    stroke: var(--accent-low);
     stroke-miterlimit: 10;
     margin: 10% auto;
-    box-shadow: inset 0px 0px 0px #d578bd;
+    box-shadow: inset 0px 0px 0px var(--accent-low);
     animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
 
     &__circle {
@@ -26,7 +26,7 @@
       stroke-dashoffset: 166;
       stroke-width: 4;
       stroke-miterlimit: 10;
-      stroke: #d578bd;
+      stroke: var(--accent-low);
       fill: none;
       animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
     }
@@ -55,7 +55,7 @@
 }
 @keyframes fill {
   100% {
-    box-shadow: inset 0px 0px 0px 30px #fff;
+    box-shadow: inset 0px 0px 0px 30px var(--on-primary);
   }
 }
 </style>

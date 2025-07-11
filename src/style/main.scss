@@ -1,5 +1,18 @@
 @use './base.scss';
 
+:root {
+  --primary-container: #c13787;
+  --on-primary: #ffff;
+  --secondary-container: #ffff;
+  --on-secondary: #262626;
+  --outline-low: #ccc;
+  --accent-low: #d578bd;
+  --accent-high: #5633d6;
+  --shadow-color: #c56ea0;
+  --label-low: #999999;
+  --error: #c5365c;
+}
+
 #app {
   height: 100vh;
 }
@@ -28,6 +41,23 @@
 
 .w-100 {
   width: 100%;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  .validation-msg {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.25rem;
+  }
+}
+.error-label {
+  color: var(--error);
+  font-size: 14px;
 }
 
 /* Animations */
